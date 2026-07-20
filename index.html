@@ -3,241 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATUR - Bedrock Hub</title>
+    <title>WeZ Studios</title>
     <style>
-        /* Genel Siyah Tema */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #000000; color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; min-height: 100vh; }
-        
-        .screen { display: none; padding: 20px; text-align: center; }
-        .active { display: block; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        /* Mavi SATUR Butonu ve Kutusu */
-        .blue-btn-box {
-            display: inline-block;
-            background-color: #0066ff;
-            color: #ffffff;
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #0d0d0d;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            border: 1px solid #222;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* ANA EKRAN */
+        .banner {
+            width: 100%;
+            height: 180px;
+            background: #111;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-weight: bold;
-            font-size: 20px;
-            padding: 15px 40px;
+            color: #555;
+            margin-bottom: 25px;
+            border: 1px solid #333;
+        }
+
+        .main-btn {
+            width: 100%;
+            padding: 16px;
             border-radius: 8px;
             border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
-            margin-top: 40px;
-        }
-
-        .welcome-text {
-            margin-top: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        /* Başlıklar */
-        h1, h2 { color: #ffffff; margin-bottom: 25px; letter-spacing: 1px; }
-
-        /* Turuncu Kategori Kutuları */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .cat-box {
-            background-color: #ff8c00; /* Turuncu */
-            color: #ffffff;
             font-weight: bold;
-            padding: 20px 10px;
-            border-radius: 6px;
+            font-size: 16px;
             cursor: pointer;
-            text-align: center;
-            font-size: 14px;
-            border: 2px solid #e07b00;
+            margin-bottom: 12px;
+            transition: opacity 0.2s;
         }
 
-        /* Arama Ekranı ve Listesi */
-        .search-container {
-            max-width: 500px;
-            margin: 0 auto 20px auto;
-            display: flex;
+        .main-btn:active {
+            opacity: 0.8;
         }
-        .search-container input {
+
+        /* MAVİ KUTU (SATIN AL / MODLAR) */
+        .btn-blue {
+            background-color: #0066ff;
+            color: white;
+        }
+
+        /* TURUNCU KUTULAR (KATEGORİLER) */
+        .btn-orange {
+            background-color: #ff6600;
+            color: white;
+        }
+
+        /* ARAMA VE BAŞLIK */
+        .title {
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .search-box {
             width: 100%;
             padding: 12px;
-            background: #111;
+            background-color: #1a1a1a;
             border: 1px solid #333;
-            color: #fff;
             border-radius: 6px;
-            outline: none;
-            font-size: 16px;
+            color: white;
+            margin-bottom: 15px;
+            font-size: 14px;
         }
 
+        /* MOD KARTLARI */
         .mod-list {
-            max-width: 500px;
-            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
-        .mod-item {
-            background: #111111;
-            border: 1px solid #222222;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: left;
+
+        .mod-card {
+            background-color: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             cursor: pointer;
+        }
+
+        .mod-info {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: bold;
-        }
-        .mod-item:hover { border-color: #ff8c00; }
-
-        /* Tanıtım / Detay Ekranı */
-        .details-card {
-            background: #111111;
-            border: 1px solid #222222;
-            border-radius: 8px;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-            text-align: left;
-        }
-        .mod-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .mod-logo {
-            width: 70px;
-            height: 70px;
-            background: #333;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
-        .mod-info-text p { font-size: 13px; color: #aaa; margin-top: 4px; }
-        
-        .stats-bar {
-            display: flex;
-            gap: 25px;
-            margin: 20px 0;
-            font-size: 18px;
-            font-weight: bold;
         }
 
-        .download-btn {
-            background-color: #0066ff; /* Mavi Kutucuk */
-            color: #ffffff;
-            width: 100%;
-            padding: 15px;
-            border: none;
+        .mod-img {
+            width: 50px;
+            height: 50px;
+            background-color: #222;
             border-radius: 6px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
+            object-fit: cover;
+        }
+
+        .mod-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* İSTATİSTİKLER (İNDİRME VE BEĞENİ) */
+        .mod-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 12px;
+            color: #aaa;
+            text-align: right;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
         }
 
         .back-btn {
-            background: transparent;
-            color: #888;
+            background: none;
             border: none;
-            margin-top: 15px;
-            cursor: pointer;
+            color: #888;
             width: 100%;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* İNDİRME DETAY EKRANI */
+        .detail-card {
+            background-color: #161616;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .detail-img {
+            width: 100%;
+            height: 180px;
+            background-color: #222;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .detail-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .download-btn {
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. EKRAN: ANA KARŞILAMA -->
-    <div id="screen-home" class="screen active">
-        <div>
-            <button class="blue-btn-box" onclick="goTo('screen-categories')">SATUR</button>
-        </div>
-        <div class="welcome-text">
-            <h3>Merhaba! Siteye Hoş Geldiniz.</h3>
-            <p>Bu Sitede Minecraft'ın Bedrock Versiyonuna Ait Mod, Shader, Map Gibi Paketlerin İndirme Bağlantısı Bulunmaktadır.</p>
-        </div>
+<div class="app-container">
+
+    <!-- 1. ANA EKRAN -->
+    <div id="homeScreen" class="screen active">
+        <div class="banner">BANNER / LOGO</div>
+        <!-- MAVİ KUTU -->
+        <button class="main-btn btn-blue" onclick="sayfaAc('kategorilerScreen')">SATIN AL / MODLAR</button>
     </div>
 
-    <!-- 2. EKRAN: KATEGORİLER -->
-    <div id="screen-categories" class="screen">
-        <h2>MİNECRAFT CATEGORİES</h2>
-        <div class="category-grid">
-            <div class="cat-box">🟧 TEXTURES</div>
-            <div class="cat-box" onclick="goTo('screen-addons')">🟧 ADDONS</div>
-            <div class="cat-box">🟧 SHADERS</div>
-            <div class="cat-box">🟧 MAPS</div>
-            <div class="cat-box">🟧 HOLO STRUCTURES</div>
-            <div class="cat-box">🟧 PvP PACKS</div>
-        </div>
+    <!-- 2. KATEGORİLER -->
+    <div id="kategorilerScreen" class="screen">
+        <h2 class="title">KATEGORİLER</h2>
+        <!-- TURUNCU KUTULAR -->
+        <button class="main-btn btn-orange" onclick="kategoriYukle('addons', 'ADDONS')">ADDONS</button>
+        <button class="main-btn btn-orange" onclick="kategoriYukle('maps', 'HARİTALAR')">HARİTALAR</button>
+        <button class="main-btn btn-orange" onclick="kategoriYukle('textures', 'DOKU PAKETLERİ')">DOKU PAKETLERİ</button>
+        <button class="back-btn" onclick="sayfaAc('homeScreen')">← Ana Sayfaya Dön</button>
     </div>
 
-    <!-- 3. EKRAN: MOD LİSTESİ (ADDONS) -->
-    <div id="screen-addons" class="screen">
-        <h2>ADDONS</h2>
-        <div class="search-container">
-            <input type="text" id="searchInput" onkeyup="filterMods()" placeholder="SEARCH............🔎">
-        </div>
-        <div class="mod-list" id="modList">
-            <div class="mod-item" onclick="goTo('screen-detail')">
-                <span>🌫️</span> | X Mod
+    <!-- 3. MOD LİSTESİ VE ARAMA -->
+    <div id="listScreen" class="screen">
+        <h2 id="listTitle" class="title">MODLAR</h2>
+        <input type="text" class="search-box" id="searchInput" placeholder="Search... 🔍" onkeyup="modAra()">
+        <div class="mod-list" id="modContainer"></div>
+        <button class="back-btn" onclick="sayfaAc('kategorilerScreen')">← Kategorilere Dön</button>
+    </div>
+
+    <!-- 4. İNDİRME SAYFASI -->
+    <div id="detailScreen" class="screen">
+        <div class="detail-card">
+            <img id="detailImg" class="detail-img" src="" alt="Mod Görseli">
+            <h3 id="detailTitle">Mod Adı</h3>
+            
+            <!-- DETAY SAYFASINDAKİ BEĞENİ VE İNDİRME SAYISI -->
+            <div class="detail-stats">
+                <span id="detailDownloads">📥 0 İndirme</span>
+                <span id="detailLikes">❤️ 0 Beğeni</span>
             </div>
-            <div class="mod-item" onclick="goTo('screen-detail')">
-                <span>🌫️</span> | DYNAMİC LİGHT
-            </div>
+
+            <a id="downloadLink" class="download-btn" href="#" target="_blank">İNDİR / SATIN AL</a>
         </div>
-        <button class="back-btn" onclick="goTo('screen-categories')">← Kategorilere Dön</button>
+        <button class="back-btn" onclick="sayfaAc('listScreen')">← Listeye Dön</button>
     </div>
 
-    <!-- 4. EKRAN: MOD TANITIM / İNDİRME -->
-    <div id="screen-detail" class="screen">
-        <div class="details-card">
-            <div class="mod-header">
-                <div class="mod-logo">💡</div>
-                <div class="mod-info-text">
-                    <h2>DYNAMİC LİGHT</h2>
-                    <p>Yayınlanma Tarihi: 20/07/2026</p>
-                    <p>Tasarımcı: mehmetcan123</p>
+</div>
+
+<script>
+    // ==========================================
+    // MOD LİSTESİ (İstediğin Modu Buraya Ekle)
+    // ==========================================
+    const modlar = [
+        {
+            id: 1,
+            ad: "Spider-Man Addon",
+            kategori: "addons",
+            resim: "https://via.placeholder.com/60/ff0000/ffffff?text=Spider",
+            indirme: 1420,
+            begeni: 350,
+            indirLink: "https://example.com/spiderman"
+        },
+        {
+            id: 2,
+            ad: "Dynamic Light",
+            kategori: "addons",
+            resim: "https://via.placeholder.com/60/ffaa00/ffffff?text=Light",
+            indirme: 890,
+            begeni: 210,
+            indirLink: "https://example.com/dynamic-light"
+        },
+        {
+            id: 3,
+            ad: "Modern City Map",
+            kategori: "maps",
+            resim: "https://via.placeholder.com/60/00aa00/ffffff?text=City",
+            indirme: 2300,
+            begeni: 950,
+            indirLink: "https://example.com/city-map"
+        }
+    ];
+
+    let aktifKategori = '';
+
+    function sayfaAc(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function kategoriYukle(kat, baslik) {
+        aktifKategori = kat;
+        document.getElementById('listTitle').innerText = baslik;
+        document.getElementById('searchInput').value = '';
+        modLisesiniCiz(modlar.filter(m => m.kategori === kat));
+        sayfaAc('listScreen');
+    }
+
+    function modLisesiniCiz(liste) {
+        const container = document.getElementById('modContainer');
+        container.innerHTML = '';
+
+        if(liste.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#666;">Mod bulunamadı.</p>';
+            return;
+        }
+
+        liste.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'mod-card';
+            card.onclick = () => detayAc(m);
+            card.innerHTML = `
+                <div class="mod-info">
+                    <img src="${m.resim}" class="mod-img" alt="icon">
+                    <span class="mod-title">${m.ad}</span>
                 </div>
-            </div>
+                <div class="mod-stats">
+                    <div class="stat-item">📥 ${m.indirme}</div>
+                    <div class="stat-item">❤️ ${m.begeni}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
 
-            <div class="stats-bar">
-                <span>⬇️ 13.2k</span>
-                <span>❤️ 985</span>
-            </div>
+    function modAra() {
+        const metin = document.getElementById('searchInput').value.toLowerCase();
+        const filtrelenmis = modlar.filter(m => 
+            m.kategori === aktifKategori && m.ad.toLowerCase().includes(metin)
+        );
+        modLisesiniCiz(filtrelenmis);
+    }
 
-            <button class="download-btn" onclick="alert('İndirme Başlatılıyor...')">🟦 DOWNLOAD</button>
-            <button class="back-btn" onclick="goTo('screen-addons')">← Listeye Dön</button>
-        </div>
-    </div>
-
-    <!-- Ekranlar Arası Geçiş Kodu -->
-    <script>
-        function goTo(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        function filterMods() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let items = document.querySelectorAll('#modList .mod-item');
-            items.forEach(item => {
-                let text = item.innerText.toLowerCase();
-                item.style.display = text.includes(input) ? 'flex' : 'none';
-            });
-        }
-    </script>
+    function detayAc(mod) {
+        document.getElementById('detailTitle').innerText = mod.ad;
+        document.getElementById('detailImg').src = mod.resim;
+        document.getElementById('detailDownloads').innerText = `📥 ${mod.indirme} İndirme`;
+        document.getElementById('detailLikes').innerText = `❤️ ${mod.begeni} Beğeni`;
+        document.getElementById('downloadLink').href = mod.indirLink;
+        sayfaAc('detailScreen');
+    }
+</script>
 
 </body>
 </html>
